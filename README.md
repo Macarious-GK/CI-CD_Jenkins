@@ -22,13 +22,12 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 ├── .gitignore
 └── README.md
 ```
-
 ### Continuous Integration
 - Using Feature based branch (New Branch for new features)
 - Develop the feature and build test (Unit/integration)
 - **Scan Dependencies** -> Linting -> **Sast(Quality Gate)** -> Build Image -> **Image Scanning**
 <div style="text-align: center;">
-<img src="./images/CI.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
+<img src="./Images/CI.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
 </div>
 
 ### Continuous Deployment
@@ -36,7 +35,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Run `integration testing`
 - After success, Create `Pull Request` for review `PR`
 <div style="text-align: center;">
-<img src="./images/CD.png" alt="Jenkins" width="500" height="300" style="border-radius: 15px;">
+<img src="./Images/CD.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
 </div>
 
 ### Continuous Delivery
@@ -46,12 +45,12 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Deploy to production using strategies
 
 <div style="text-align: center;">
-<img src="./images/CDelivery.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
+<img src="./Images/CDelivery.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
 </div>
 
 ### Post Build
 - Collect reports
 - Notify admin using slack/email
 <div style="text-align: center;">
-<img src="./images/Postbuild.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
+<img src="./Images/Postbuild.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
 </div>
