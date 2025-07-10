@@ -1,7 +1,7 @@
-/src/node_modules
-/src/solar-system.png
-/src/.nyc_output
-/src/.talismanrc
-/src/coverage
-/src/test-results.xml
-/src/.env
+/App-SourceCode/node_modules
+/App-SourceCode/solar-system.png
+/App-SourceCode/.nyc_output
+/App-SourceCode/.talismanrc
+/App-SourceCode/coverage
+/App-SourceCode/test-results.xml
+/App-SourceCode/.env
