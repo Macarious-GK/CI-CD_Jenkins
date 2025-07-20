@@ -29,7 +29,7 @@ pipeline {
                     echo "Installing dependencies in App-SourceCode directory..."
                     sh '''
                     rm -rf node_modules package-lock.json
-                    npm ci --no-audit 
+                    npm install --no-audit
                     '''
                 }
             }
