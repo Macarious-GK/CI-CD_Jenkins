@@ -27,7 +27,6 @@ RUN useradd -m jenkins
 USER jenkins
 
 ENV NPM_CONFIG_CACHE=/home/jenkins/.npm
-RUN mkdir -p $NPM_CONFIG_CACHE && chown -R jenkins:jenkins $NPM_CONFIG_CACHE
-
+RUN mkdir -p /home/jenkins/.npm && chown -R jenkins:jenkins /home/jenkins/.npm
 
 WORKDIR /home/jenkins/app
