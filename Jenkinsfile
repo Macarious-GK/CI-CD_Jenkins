@@ -20,7 +20,10 @@ pipeline {
     stages {
         stage('Installing Dependencies') {
             steps {
-                sh 'npm install --no-audit'
+                dir('App-SourceCode') {
+                    echo "Installing dependencies in App-SourceCode directory..."
+                    sh 'npm install --no-audit'
+                }
             }
         }
 
