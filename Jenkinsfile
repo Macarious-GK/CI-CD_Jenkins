@@ -1,9 +1,10 @@
 pipeline {
     agent {
-        docker {
-            image 'node:18' 
-            args '-u node'
-        }
+        any
+        // docker {
+        //     image 'node:18' 
+        //     args '-u node'
+        // }
     }
 
     parameters {
@@ -24,9 +25,7 @@ pipeline {
                 dir('App-SourceCode') {
                     echo "Installing dependencies in App-SourceCode directory..."
                     sh '''
-                    rm -rf node_modules package-lock.json
-                    npm install  --no-audit 
-                    chown -R 113:121 "/.npm"
+                    npm ci --no-audit 
                     '''
                 }
             }
