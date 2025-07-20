@@ -41,7 +41,7 @@ pipeline {
                     //   echo "Using cached node_modules"
                     // fi
 
-                    npm install --no-audit --cache /tmp/empty-npm-cache
+                    npm install --no-audit
                     '''
                 }
             }
