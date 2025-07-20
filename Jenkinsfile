@@ -1,11 +1,11 @@
 pipeline {
-    agent {
-        any
-        // docker {
-        //     image 'node:18' 
-        //     args '-u node'
-        // }
-    }
+    // agent {
+    //     any
+    //     // docker {
+    //     //     image 'node:18' 
+    //     //     args '-u node'
+    //     // }
+    // }
 
     parameters {
         string(name: 'TEST_MongoDB_URL', defaultValue: '127.0.0.1', description: 'MongoDB host')
