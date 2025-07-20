@@ -22,8 +22,8 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                     echo "Installing dependencies in App-SourceCode directory..."
-                    sh 'chown -R 113:121 "/.npm"'
                     sh 'npm install '
+                    sh 'chown -R 113:121 "/.npm"'
                 }
             }
         }
