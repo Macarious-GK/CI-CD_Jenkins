@@ -22,7 +22,8 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                     echo "Installing dependencies in App-SourceCode directory..."
-                    sh 'npm install --no-audit'
+                    sh 'sudo chown -R 113:121 "/.npm"'
+                    sh 'npm install '
                 }
             }
         }
