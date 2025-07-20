@@ -22,11 +22,16 @@ FROM node:18
 # Optional: install additional tools here
 # RUN apt-get update && apt-get install -y git
 
-# Create a non-root user (optional but recommended)
+# Create a non-root user
 RUN useradd -m jenkins
-USER jenkins
 
+# Set npm cache location and fix ownership
 ENV NPM_CONFIG_CACHE=/home/jenkins/.npm
 RUN mkdir -p /home/jenkins/.npm && chown -R jenkins:jenkins /home/jenkins/.npm
 
+# Switch to non-root user after setting up permissions
+USER jenkins
+
+# Set working directory
 WORKDIR /home/jenkins/app
+
