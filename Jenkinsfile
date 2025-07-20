@@ -24,6 +24,15 @@ pipeline {
             }
         }
 
+        stage('Linting Code') {
+            steps {
+                sh '''
+                    echo "Running ESLint..."
+                    npm run lint || true
+                '''
+            }
+        }
+
         stage('Dependency Scanning') {
             parallel {
                 stage('NPM Dependency Audit') {
