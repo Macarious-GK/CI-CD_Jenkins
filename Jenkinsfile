@@ -40,8 +40,9 @@ pipeline {
                     // else
                     //   echo "Using cached node_modules"
                     // fi
-
-                    npm install --no-audit
+                    // npm install --no-audit
+                    ls -alt
+                    pwd 
                     '''
                 }
             }
