@@ -35,7 +35,12 @@ pipeline {
                 dir('App-SourceCode') {
                     echo "Installing dependencies in App-SourceCode directory..."
                     sh '''
-                    rm -rf node_modules package-lock.json
+                    // if [ ! -d node_modules ]; then
+                    //   npm ci --no-audit
+                    // else
+                    //   echo "Using cached node_modules"
+                    // fi
+
                     npm install --no-audit --cache /tmp/empty-npm-cache
                     '''
                 }
@@ -78,13 +83,15 @@ pipeline {
                 }
             }
         }
+
         stage('Unit Testing') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO')]) {
+                withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
                     sh 'npm test'
                 }
             }
         }
+
         stage('Code Coverage') {
             steps {
                 dir('App-SourceCode') {
