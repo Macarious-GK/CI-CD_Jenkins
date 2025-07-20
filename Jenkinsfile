@@ -1,15 +1,22 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18' 
+        }
+    }
 
     parameters {
-        string(name: 'TEST_MongoDB_URL', defaultValue: '127.0.0.1', description: 'Node.js environment')
+        string(name: 'TEST_MongoDB_URL', defaultValue: '127.0.0.1', description: 'MongoDB host')
     }
+
     environment {
-        MONGO_URI = "mongodb://${TEST_MongoDB_URL}:27017/test"
+        MONGO_URI = "mongodb://${params.TEST_MongoDB_URL}:27017/test"
     }
-    options { 
-        timestamps() 
+
+    options {
+        timestamps()
     }
+
     stages {
         stage('Installing Dependencies') {
             steps {
@@ -22,6 +29,7 @@ pipeline {
                 stage('NPM Dependency Audit') {
                     steps {
                         sh '''
+                            echo "Running npm audit..."
                             npm audit --audit-level=critical || true
                         '''
                     }
@@ -29,18 +37,15 @@ pipeline {
 
                 stage('OWASP Dependency Check') {
                     steps {
-                        script{
-                            sh '''
-                                echo "Running OWASP Dependency Check..."
-                                sleep 60
-                                echo "${TEST_MongoDB_URL}"
-                                echo "OWASP Dependency Check completed."
-                            '''
-                        }
+                        sh '''
+                            echo "Running OWASP Dependency Check..."
+                            echo "Mongo URL: ${MONGO_URI}"
+                            sleep 30
+                            echo "OWASP Dependency Check completed."
+                        '''
                     }
                 }
             }
         }
-        
     }
 }
