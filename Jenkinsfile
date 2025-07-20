@@ -24,8 +24,8 @@ pipeline {
                     echo "Installing dependencies in App-SourceCode directory..."
                     sh '''
                     rm -rf node_modules package-lock.json
-                    sh npm install  --no-audit 
-                    sh chown -R 113:121 "/.npm"
+                    npm install  --no-audit 
+                    chown -R 113:121 "/.npm"
                     '''
                 }
             }
