@@ -35,6 +35,17 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Install Dependencies
 - Lint Code
 - Dependency Scanning
+- Unit Testing
+- Code Coverage
+
+
+- > Skills Applied
+  - *tools*, *parameters*, *environment* & *Options*
+  - Credentials:
+    - `withCredentials`
+    - Using `Credentials()` in `environment{}`
+  - `catchError`
+  - `publishHTML`
 
 
 

@@ -9,13 +9,18 @@ pipeline {
     //     // }
     // }
     agent any
+    tools {
+    nodejs 'latestnodejs'
+    }
 
     parameters {
-        string(name: 'TEST_MongoDB_URL', defaultValue: '127.0.0.1', description: 'MongoDB host')
+        string(name: 'TEST_MongoDB_URL', defaultValue: '192.168.56.20', description: 'MongoDB host')
     }
 
     environment {
         MONGO_URI = "mongodb://${params.TEST_MongoDB_URL}:27017/admin"
+        MONGO_USERNAME = credentials("MONGO_USERNAME")
+        MONGO_PASSWORD = credentials("MONGO_PASSWORD")
     }
 
     options {
@@ -83,10 +88,8 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                     echo "Running unit tests..."
-                    withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
-                        catchError(buildResult: 'SUCCESS', message: 'There is something not very very important happened', stageResult: 'UNSTABLE') {
-                            sh 'npm test'
-                        }
+                    catchError(buildResult: 'SUCCESS', message: 'There is something not very very important happened', stageResult: 'UNSTABLE') {
+                        sh 'npm test'
                     }
                     echo "Unit tests completed."
                 }
@@ -103,9 +106,14 @@ pipeline {
                         echo "Code coverage completed."
                         '''
                     }
-                    publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
                 }
             }
+        }
+    }
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'test-results.xml'
+            publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
