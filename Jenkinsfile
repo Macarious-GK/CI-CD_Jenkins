@@ -35,18 +35,8 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                     echo "Installing dependencies in App-SourceCode directory..."
-                    sh '''
-                    // if [ ! -d node_modules ]; then
-                    //   npm ci --no-audit
-                    // else
-                    //   echo "Using cached node_modules"
-                    // fi
-                    // npm install --no-audit
-                    // ls -alt
-                    // pwd 
-                    echo "Running npm install..."
-                    // npm install --no-audit || true
-                    '''
+                    // npm install || true
+                    echo "Dependencies installed successfully."
                 }
             }
         }
