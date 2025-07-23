@@ -1,13 +1,14 @@
 pipeline {
-    agent {
-        // dockerfile {
-        //     filename 'Dockerfile'
-        //     dir 'App-SourceCode' // This is where Jenkins will look for the Dockerfile
-        // }
-        docker {
-            image 'macarious25siv/project:nodejsagent'
-        }
-    }
+    // agent {
+    //     // dockerfile {
+    //     //     filename 'Dockerfile'
+    //     //     dir 'App-SourceCode' // This is where Jenkins will look for the Dockerfile
+    //     // }
+    //     // docker {
+    //     //     image 'macarious25siv/project:nodejsagent'
+    //     // }
+    // }
+    agent any
 
     parameters {
         string(name: 'TEST_MongoDB_URL', defaultValue: '127.0.0.1', description: 'MongoDB host')
@@ -41,8 +42,10 @@ pipeline {
                     //   echo "Using cached node_modules"
                     // fi
                     // npm install --no-audit
-                    ls -alt
-                    pwd 
+                    // ls -alt
+                    // pwd 
+                    echo "Running npm install..."
+                    // npm install --no-audit || true
                     '''
                 }
             }
@@ -54,6 +57,7 @@ pipeline {
                     sh '''
                     echo "Running ESLint..."
                     npm run lint || true
+                    echo "Linting completed."
                     '''
                 }
             }
