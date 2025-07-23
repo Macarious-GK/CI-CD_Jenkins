@@ -10,7 +10,7 @@ pipeline {
     // }
     agent any
     tools {
-    nodejs 'latestnodejs'
+        nodejs 'latestnodejs'
     }
 
     parameters {
@@ -112,8 +112,10 @@ pipeline {
     }
     post {
         always {
-            junit allowEmptyResults: true, testResults: 'test-results.xml'
-            publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            dir('App-SourceCode') {
+                junit allowEmptyResults: true, testResults: 'test-results.xml'
+                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            }
         }
     }
 }
