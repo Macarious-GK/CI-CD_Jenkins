@@ -37,18 +37,28 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Dependency Scanning
 - Unit Testing
 - Code Coverage
+- SAST Analysis (َQuality Gate) `SonarQube`
 
 
 - > Skills Applied
-  - *tools*, *parameters*, *environment* & *Options*
+  - *tools*, *parameters*, *environment*, *Options* & *post*
   - Credentials:
     - `withCredentials`
     - Using `Credentials()` in `environment{}`
-  - `catchError`
-  - `publishHTML`
+  - Error Handling:
+    - `catchError`
+  - Tests & Artifacts:
+    - `publishHTML`
+    - `junit`
+  - Security:
+    - `withSonarQubeEnv()`   
+    - `waitForQualityGate()` 
 
 
 
+<div style="text-align: center;">
+<img src="./Images//jenkins-sonar.PNG" alt="Jenkins" width="700" height="400" style="border-radius: 15px;">
+</div>
 
 
 ## Continuous Deployment
@@ -78,6 +88,11 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 
 ## Best Practice
+### Backup & Restore in Jenkins
+```bash
+tar -czvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins .
+tar -xzvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins
+```
 
 
 ### Linting Stage
