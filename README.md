@@ -42,6 +42,9 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Docker Image Scan
 - Docker Image Push
 
+<div style="text-align: center;">
+<img src="./Images/FULL_CI_Pipeline.png" alt="Jenkins" width="1100" height="150" style="border-radius: 15px;">
+</div>
 
 - > Skills Applied
   - *tools*, *parameters*, *environment*, *Options* & *post*
