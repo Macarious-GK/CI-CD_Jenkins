@@ -38,6 +38,9 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Unit Testing
 - Code Coverage
 - SAST Analysis (َQuality Gate) `SonarQube`
+- Docker Image Build
+- Docker Image Scan
+- Docker Image Push
 
 
 - > Skills Applied
@@ -53,6 +56,8 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
   - Security:
     - `withSonarQubeEnv()`   
     - `waitForQualityGate()` 
+  - Docker:
+    - `withDockerRegistry()`
 
 
 

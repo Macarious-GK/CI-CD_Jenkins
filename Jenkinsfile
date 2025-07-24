@@ -126,12 +126,55 @@ pipeline {
                 waitForQualityGate abortPipeline: true
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('App-SourceCode') {
+                    echo "Building Docker image..."
+                    sh 'docker build -t macarious25siv/project:$GIT_COMMIT .'
+                    echo "Docker image built successfully."
+                }
+            }
+        }
+
+        stage('Vulnerability Scan Docker Image') {
+            steps {
+                dir('App-SourceCode') {
+                    echo "Scanning Docker image with Trivy..."
+                    sh '''
+                        trivy image macarious25siv/project:$GIT_COMMIT \
+                            --severity HIGH,CRITICAL \
+                            --exit-code 1 \
+                            --ignore-unfixed \
+                            --format json -o trivy-report.json \
+                            --quiet        
+                        trivy convert trivy-report.json -o trivy-report.html            
+                    '''
+                    echo "Docker image scan completed."
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                dir('App-SourceCode') {
+                    echo "Pushing Docker image to registry..."
+                    withDockerRegistry(credentialsId: 'docker-hub-credentials', url: "") {
+                        sh 'docker push macarious25siv/project:$GIT_COMMIT'
+                    }
+                    echo "Docker image pushed successfully."
+                }
+            }
+        }
     }
     post {
         always {
             dir('App-SourceCode') {
                 junit allowEmptyResults: true, testResults: 'test-results.xml'
+
                 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+
+                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'trivy-report.html', reportName: 'Trivy Vulnerability Scan Report', reportTitles: '', useWrapperFileDirectly: true])
             }
         }
     }
