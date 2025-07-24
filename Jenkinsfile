@@ -170,6 +170,30 @@ pipeline {
                 }
             }
         }
+
+        stage('Testing Deploy VM') {
+            steps {
+                script {
+                    sshagent(['Test-deploy-vm']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no deployuser@192.168.56.21 "
+                        if docker ps -a | grep -q 'solar-system'; then
+                            echo "Container found. Stopping..."
+                            docker stop "solar-system" && docker rm "solar-system"
+                            echo "Container stopped and removed."
+                        fi
+                        
+                        docker run --name solar-system \\
+                            -e MONGO_URI=$MONGO_URI \\
+                            -e MONGO_USERNAME=$MONGO_USERNAME \\
+                            -e MONGO_PASSWORD=$MONGO_PASSWORD \\
+                            -p 3000:3000 -d macarious25siv/project:$GIT_COMMIT
+                        "
+                    '''
+                    }
+                }
+            }
+        }
     }
     post {
         always {
