@@ -30,7 +30,11 @@ pipeline {
     stages {
         stage('Checkout Repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/Macarious-GK/CI-CD_Jenkins_NodeJS.git'
+                script{
+                    def scmVars = checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Macarious-GK/CI-CD_Jenkins_NodeJS.git']])
+                    env.GIT_COMMIT = scmVars.GIT_COMMIT
+                    env.GIT_BRANCH = scmVars.GIT_BRANCH
+                }
                 sh 'ls -la'
                 sh 'pwd'
             }
@@ -144,11 +148,11 @@ pipeline {
                     sh '''
                         trivy image macarious25siv/project:$GIT_COMMIT \
                             --severity HIGH,CRITICAL \
-                            --exit-code 1 \
+                            --exit-code 0 \
                             --ignore-unfixed \
                             --format json -o trivy-report.json \
                             --quiet        
-                        trivy convert trivy-report.json -o trivy-report.html            
+                        
                     '''
                     echo "Docker image scan completed."
                 }
@@ -170,7 +174,17 @@ pipeline {
     post {
         always {
             dir('App-SourceCode') {
+                sh '''
+                trivy convert \
+                    --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
+                    --output trivy-report.html trivy-report.json
+                trivy convert \
+                    --format template --template "@/usr/local/share/trivy/templates/junit.tpl" \
+                    --output trivy-report.xml trivy-report.json
+                '''
+
                 junit allowEmptyResults: true, testResults: 'test-results.xml'
+                junit allowEmptyResults: true, testResults: 'trivy-report.xml'
 
                 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
 
