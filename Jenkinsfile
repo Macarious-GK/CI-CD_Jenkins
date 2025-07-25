@@ -207,7 +207,9 @@ pipeline {
         
         stage('K8S Update Image Tag') {
             when {
-                branch 'origin/features'
+                expression {
+                    return env.GIT_BRANCH == 'origin/features'
+                }
             }
             steps {
                 sh 'git clone -b main https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git'
