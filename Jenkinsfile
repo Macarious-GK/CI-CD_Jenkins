@@ -33,13 +33,15 @@ pipeline {
     stages {
         stage('Checkout Repo') {
             steps {
-                script{
-                    def scmVars = checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Macarious-GK/CI-CD_Jenkins_NodeJS.git']])
-                    env.GIT_COMMIT = scmVars.GIT_COMMIT
-                    env.GIT_BRANCH = scmVars.GIT_BRANCH
-                }
+                // script{
+                //     def scmVars = checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Macarious-GK/CI-CD_Jenkins_NodeJS.git']])
+                //     env.GIT_COMMIT = scmVars.GIT_COMMIT
+                //     env.GIT_BRANCH = scmVars.GIT_BRANCH
+                // }
                 sh 'ls -la'
                 sh 'pwd'
+                echo "GIT_COMMIT: ${GIT_COMMIT}"
+                echo "GIT_BRANCH: ${GIT_BRANCH}"
             }
         }
 
