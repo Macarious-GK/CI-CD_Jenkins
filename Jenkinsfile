@@ -227,7 +227,8 @@ pipeline {
                         git remote set-url origin https://${GIT_USER}:${GIT_TOKEN}@github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git
 
                         git add Application_NodeJS.yaml
-                        git commit -m "CI: update image tag to ${GIT_COMMIT}"
+                        git add .
+                        git commit -am "CI: update image tag to ${GIT_COMMIT}"
                         git push -u origin feature-$BUILD_ID
 
                 
