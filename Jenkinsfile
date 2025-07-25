@@ -21,6 +21,9 @@ pipeline {
         MONGO_URI = "mongodb://${params.TEST_MongoDB_URL}:27017/admin"
         MONGO_USERNAME = credentials("MONGO_USERNAME")
         MONGO_PASSWORD = credentials("MONGO_PASSWORD")
+        GIT_USER = "Macarious-GK"
+        GIT_EMAIL = "m.labibebidallah@nu.edu.eg"
+        GIT_TOKEN = credentials("github-creds-token")
     }
 
     options {
@@ -212,6 +215,14 @@ pipeline {
                         git checkout -b feature-$BUILD_ID
                         sed -i "s#macarious25siv/private-docker-repo:[^ ]*#macarious25siv/private-docker-repo:$GIT_COMMIT#g" deployment.yml
                         cat deployment.yml
+
+                        git config user.name "$GIT_USER"
+                        git config user.email "$GIT_EMAIL"
+                        git remote set-url origin https://${GIT_USER}:${GIT_TOKEN}@github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git
+
+                        git add deployment.yml
+                        git commit -m "CI: update image tag to ${GIT_COMMIT}"
+                        git push -u origin feature-$BUILD_ID
 
                 
                         '''
