@@ -199,6 +199,25 @@ pipeline {
                 }
             }
         }
+        
+        stage('K8S Update Image Tag') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'git clone -b main https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git'
+                dir('CI-CD_Manifests_NodeJS/kubernetes') {
+                    sh '''
+                        git checkout main
+                        git checkout -b feature-$BUILD_ID
+                        sed -i "s#macarious25siv/private-docker-repo:[^ ]*#macarious25siv/private-docker-repo:$GIT_COMMIT#g" deployment.yml
+                        cat deployment.yml
+
+                
+                        '''
+                    }
+                }   
+        }
     }
     post {
         always {
