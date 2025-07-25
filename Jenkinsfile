@@ -173,9 +173,10 @@ pipeline {
         }
 
         stage('Testing Deploy VM') {
-            when{
-                expression { env.BRANCH_NAME == 'main' }
+            when {
+                branch 'main'
             }
+
             steps {
                 script {
                     sshagent(['Test-deploy-vm']) {
