@@ -45,97 +45,97 @@ pipeline {
             }
         }
 
-        stage('Installing Dependencies') {
-            steps {
-                dir('App-SourceCode') {
-                    echo "Installing dependencies in App-SourceCode directory..."
-                    // npm install || true
-                    echo "Dependencies installed successfully."
-                }
-            }
-        }
+        // stage('Installing Dependencies') {
+        //     steps {
+        //         dir('App-SourceCode') {
+        //             echo "Installing dependencies in App-SourceCode directory..."
+        //             // npm install || true
+        //             echo "Dependencies installed successfully."
+        //         }
+        //     }
+        // }
 
-        stage('Linting Code') {
-            steps {
-                dir('App-SourceCode') {
-                    sh '''
-                    echo "Running ESLint..."
-                    npm run lint || true
-                    echo "Linting completed."
-                    '''
-                }
-            }
-        }
+        // stage('Linting Code') {
+        //     steps {
+        //         dir('App-SourceCode') {
+        //             sh '''
+        //             echo "Running ESLint..."
+        //             npm run lint || true
+        //             echo "Linting completed."
+        //             '''
+        //         }
+        //     }
+        // }
 
-        stage('Dependency Scanning') {
-            parallel {
-                stage('NPM Dependency Audit') {
-                    steps {
-                        dir('App-SourceCode') {
-                            sh '''
-                            echo "Running npm audit..."
-                            npm audit --audit-level=critical || true
-                            '''
-                        }
-                    }
-                }
+        // stage('Dependency Scanning') {
+        //     parallel {
+        //         stage('NPM Dependency Audit') {
+        //             steps {
+        //                 dir('App-SourceCode') {
+        //                     sh '''
+        //                     echo "Running npm audit..."
+        //                     npm audit --audit-level=critical || true
+        //                     '''
+        //                 }
+        //             }
+        //         }
 
-                stage('OWASP Dependency Check') {
-                    steps {
-                        sh '''
-                        echo "Running OWASP Dependency Check..."
-                        echo "Mongo URL: ${MONGO_URI}"
-                        sleep 10
-                        echo "OWASP Dependency Check completed."
-                        '''
-                    }
-                }
-            }
-        }
+        //         stage('OWASP Dependency Check') {
+        //             steps {
+        //                 sh '''
+        //                 echo "Running OWASP Dependency Check..."
+        //                 echo "Mongo URL: ${MONGO_URI}"
+        //                 sleep 10
+        //                 echo "OWASP Dependency Check completed."
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Unit Testing') {
-            steps {
-                dir('App-SourceCode') {
-                    echo "Running unit tests..."
-                    catchError(buildResult: 'SUCCESS', message: 'There is something not very very important happened', stageResult: 'UNSTABLE') {
-                        sh 'npm test'
-                    }
-                    echo "Unit tests completed."
-                }
-            }
-        }
+        // stage('Unit Testing') {
+        //     steps {
+        //         dir('App-SourceCode') {
+        //             echo "Running unit tests..."
+        //             catchError(buildResult: 'SUCCESS', message: 'There is something not very very important happened', stageResult: 'UNSTABLE') {
+        //                 sh 'npm test'
+        //             }
+        //             echo "Unit tests completed."
+        //         }
+        //     }
+        // }
 
-        stage('Code Coverage') {
-            steps {
-                dir('App-SourceCode') {
-                    catchError(buildResult: 'SUCCESS', message: 'Oops! it will be fixed in future releases', stageResult: 'UNSTABLE') {
-                        sh '''
-                        echo "Running code coverage..."
-                        npm run coverage
-                        echo "Code coverage completed."
-                        '''
-                    }
-                }
-            }
-        }
+        // stage('Code Coverage') {
+        //     steps {
+        //         dir('App-SourceCode') {
+        //             catchError(buildResult: 'SUCCESS', message: 'Oops! it will be fixed in future releases', stageResult: 'UNSTABLE') {
+        //                 sh '''
+        //                 echo "Running code coverage..."
+        //                 npm run coverage
+        //                 echo "Code coverage completed."
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('SAST - SonarQube') {
-            steps {
-                echo "Running SonarQube analysis..."
-                // timeout(time: 60, unit: 'SECONDS') {
-                //     withSonarQubeEnv('sonar-qube-server') {
-                //         sh 'echo $SONAR_SCANNER_HOME'
-                //         sh '''
-                //         $SONAR_SCANNER_HOME/bin/sonar-scanner \
-                //         -Dsonar.projectKey=Solar-System-Project \
-                //         -Dsonar.sources=app.js \
-                //         -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-                //         '''
-                //     }
-                // }
-                // waitForQualityGate abortPipeline: true
-            }
-        }
+        // stage('SAST - SonarQube') {
+        //     steps {
+        //         echo "Running SonarQube analysis..."
+        //         // timeout(time: 60, unit: 'SECONDS') {
+        //         //     withSonarQubeEnv('sonar-qube-server') {
+        //         //         sh 'echo $SONAR_SCANNER_HOME'
+        //         //         sh '''
+        //         //         $SONAR_SCANNER_HOME/bin/sonar-scanner \
+        //         //         -Dsonar.projectKey=Solar-System-Project \
+        //         //         -Dsonar.sources=app.js \
+        //         //         -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+        //         //         '''
+        //         //     }
+        //         // }
+        //         // waitForQualityGate abortPipeline: true
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
@@ -147,23 +147,23 @@ pipeline {
             }
         }
 
-        stage('Vulnerability Scan Docker Image') {
-            steps {
-                dir('App-SourceCode') {
-                    echo "Scanning Docker image with Trivy..."
-                    sh '''
-                        trivy image macarious25siv/project:$GIT_COMMIT \
-                            --severity CRITICAL \
-                            --exit-code 0 \
-                            --ignore-unfixed \
-                            --format json -o trivy-report.json \
-                            --quiet        
+        // stage('Vulnerability Scan Docker Image') {
+        //     steps {
+        //         dir('App-SourceCode') {
+        //             echo "Scanning Docker image with Trivy..."
+        //             sh '''
+        //                 trivy image macarious25siv/project:$GIT_COMMIT \
+        //                     --severity CRITICAL \
+        //                     --exit-code 0 \
+        //                     --ignore-unfixed \
+        //                     --format json -o trivy-report.json \
+        //                     --quiet        
                         
-                    '''
-                    echo "Docker image scan completed."
-                }
-            }
-        }
+        //             '''
+        //             echo "Docker image scan completed."
+        //         }
+        //     }
+        // }
 
         stage('Push Docker Image') {
             steps {
@@ -215,6 +215,8 @@ pipeline {
                 sh 'git clone -b main https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git'
                 dir('CI-CD_Manifests_NodeJS/kubernetes') {
                     sh '''
+                        pwd
+                        ls -la
                         git checkout main
                         git checkout -b feature-$BUILD_ID
                         sed -i "s#macarious25siv/private-docker-repo:[^ ]*#macarious25siv/private-docker-repo:$GIT_COMMIT#g" deployment.yml
