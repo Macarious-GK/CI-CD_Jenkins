@@ -219,14 +219,14 @@ pipeline {
                         ls -la
                         git checkout main
                         git checkout -b feature-$BUILD_ID
-                        sed -i "s#macarious25siv/private-docker-repo:[^ ]*#macarious25siv/private-docker-repo:$GIT_COMMIT#g" deployment.yml
-                        cat deployment.yml
+                        sed -i "s#macarious25siv/private-docker-repo:[^ ]*#macarious25siv/private-docker-repo:$GIT_COMMIT#g" Application_NodeJS.yaml
+                        cat Application_NodeJS.yaml
 
                         git config user.name "$GIT_USER"
                         git config user.email "$GIT_EMAIL"
                         git remote set-url origin https://${GIT_USER}:${GIT_TOKEN}@github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git
 
-                        git add deployment.yml
+                        git add Application_NodeJS.yaml
                         git commit -m "CI: update image tag to ${GIT_COMMIT}"
                         git push -u origin feature-$BUILD_ID
 
@@ -238,6 +238,8 @@ pipeline {
     }
     post {
         always {
+            echo "Cleaning up workspace..."
+            sh 'rm -rf CI-CD_Manifests_NodeJS'
             dir('App-SourceCode') {
                 sh '''
                 trivy convert \
