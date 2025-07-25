@@ -171,6 +171,7 @@ pipeline {
                         sh 'docker push macarious25siv/project:$GIT_COMMIT'
                     }
                     echo "Docker image pushed successfully."
+                    echo "GIT_BRANCH: ${GIT_BRANCH}"
                 }
             }
         }
