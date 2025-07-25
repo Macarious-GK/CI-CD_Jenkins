@@ -259,7 +259,7 @@ pipeline {
     post {
         always {
             echo "Cleaning up workspace..."
-            sh 'rm -rf CI-CD_Manifests_NodeJS'
+            // sh 'rm -rf CI-CD_Manifests_NodeJS'
             dir('App-SourceCode') {
                 sh '''
                 trivy convert \
