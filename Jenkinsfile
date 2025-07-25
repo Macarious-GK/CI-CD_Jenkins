@@ -268,23 +268,25 @@ pipeline {
         }
 
         stage('DAST - OWASP ZAP') {
-            directory('App-SourceCode') {
-            echo "Running OWASP ZAP API scan..."
-            sh '''
-            chmod 777 $(pwd)
-            docker run -v $(pwd):/zap/wrk/:rw ghcr.io/zaproxy/zaproxy zap-api-scan.py \
-            -t http://192.168.56.10:30333/api-docs/ \
-            -f openapi \
-            -r zap_report.html \
-            -w zap_report.md \
-            -J zap_json_report.json \
-            -x zap_xml_report.xml \
-            -c zap_ignore_rules.txt \
-            '''
-            echo "OWASP ZAP API scan completed."
+            steps {
+                dir('App-SourceCode') {
+                echo "Running OWASP ZAP API scan..."
+                sh '''
+                chmod 777 $(pwd)
+                docker run -v $(pwd):/zap/wrk/:rw ghcr.io/zaproxy/zaproxy zap-api-scan.py \
+                -t http://192.168.56.10:30333/api-docs/ \
+                -f openapi \
+                -r zap_report.html \
+                -w zap_report.md \
+                -J zap_json_report.json \
+                -x zap_xml_report.xml \
+                -c zap_ignore_rules.txt \
+                '''
+                echo "OWASP ZAP API scan completed."
+                }
             }
         }
-        
+
     }
     post {
         always {
