@@ -202,7 +202,7 @@ pipeline {
         
         stage('K8S Update Image Tag') {
             when {
-                branch 'features'
+                branch '*/features'
             }
             steps {
                 sh 'git clone -b main https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git'
