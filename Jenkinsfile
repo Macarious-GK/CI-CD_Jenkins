@@ -171,7 +171,6 @@ pipeline {
                         sh 'docker push macarious25siv/project:$GIT_COMMIT'
                     }
                     echo "Docker image pushed successfully."
-                    echo "GIT_BRANCH: ${GIT_BRANCH}"
                 }
             }
         }
@@ -206,7 +205,7 @@ pipeline {
         
         stage('K8S Update Image Tag') {
             when {
-                branch '*/features'
+                branch 'origin/features'
             }
             steps {
                 sh 'git clone -b main https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git'
