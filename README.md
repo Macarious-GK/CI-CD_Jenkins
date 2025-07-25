@@ -96,6 +96,9 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 
 ## Best Practice
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+
+
 ### Backup & Restore in Jenkins
 ```bash
 tar -czvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins .
