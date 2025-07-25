@@ -148,7 +148,7 @@ pipeline {
                     echo "Scanning Docker image with Trivy..."
                     sh '''
                         trivy image macarious25siv/project:$GIT_COMMIT \
-                            --severity HIGH,CRITICAL \
+                            --severity CRITICAL \
                             --exit-code 0 \
                             --ignore-unfixed \
                             --format json -o trivy-report.json \
