@@ -255,6 +255,36 @@ pipeline {
                 """
             }
         }
+
+        stage('Approve App Deployment') {
+            when {
+                branch 'PR*'
+            }
+            steps {
+                timeout(time: 1, unit: 'DAYS') {
+                    input message: 'Is the PR merged and is the Argo CD application synced?', ok: 'Yes, PR merged & Argo CD synced'
+                }
+            }
+        }
+
+        stage('DAST - OWASP ZAP') {
+            directory('App-SourceCode') {
+            echo "Running OWASP ZAP API scan..."
+            sh '''
+            chmod 777 $(pwd)
+            docker run -v $(pwd):/zap/wrk/:rw ghcr.io/zaproxy/zaproxy zap-api-scan.py \
+            -t http://192.168.56.10:30333/api-docs/ \
+            -f openapi \
+            -r zap_report.html \
+            -w zap_report.md \
+            -J zap_json_report.json \
+            -x zap_xml_report.xml \
+            -c zap_ignore_rules.txt \
+            '''
+            echo "OWASP ZAP API scan completed."
+            }
+        }
+        
     }
     post {
         always {
@@ -274,8 +304,15 @@ pipeline {
                 junit allowEmptyResults: true, testResults: 'trivy-report.xml'
 
                 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-
                 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'trivy-report.html', reportName: 'Trivy Vulnerability Scan Report', reportTitles: '', useWrapperFileDirectly: true])
+                publishHTML([allowMissing: true,
+                 alwaysLinkToLastBuild: true,
+                 keepAll: true,
+                 reportDir: '.',
+                 reportFiles: 'zap_report.html',
+                 reportName: 'DAST - OWASP ZAP Report',
+                 reportTitles: '',
+                 useWrapperFileDirectly: true])
             }
         }
     }
