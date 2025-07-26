@@ -157,8 +157,7 @@ pipeline {
                             --severity CRITICAL \
                             --exit-code 0 \
                             --ignore-unfixed \
-                            --format json -o trivy-report.json \
-                            --quiet        
+                            --format json -o trivy-report.json    
                         
                     '''
                     echo "Docker image scan completed."
