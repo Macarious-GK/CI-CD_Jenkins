@@ -96,6 +96,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 
 ## Best Practice
+
 System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
 
 
