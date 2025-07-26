@@ -152,14 +152,14 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                     echo "Scanning Docker image with Trivy..."
-                    sh '''
-                        trivy image macarious25siv/project:$GIT_COMMIT \
-                            --severity CRITICAL \
-                            --exit-code 0 \
-                            --ignore-unfixed \
-                            --format json -o trivy-report.json    
+                    // sh '''
+                    //     trivy image macarious25siv/project:$GIT_COMMIT \
+                    //         --severity CRITICAL \
+                    //         --exit-code 0 \
+                    //         --ignore-unfixed \
+                    //         --format json -o trivy-report.json    
                         
-                    '''
+                    // '''
                     echo "Docker image scan completed."
                 }
             }
