@@ -42,12 +42,25 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Docker Image Scan
 - Docker Image Push
 
-<div style="text-align: center;">
+> ###  CD Pipeline Stages
+- Testing Deploy VM
+- K8S Update Image Tag
+- Raise PR (Manifests Repo: new Image Tag)
+- Approve App Deployment 
+- DAST - OWASP ZAP
+- Admin Prod Approve 
+- 
+- Smoke testing
+
+<!-- <div style="text-align: center;">
 <img src="./Images/FULL_CI_Pipeline.png" alt="Jenkins" width="1100" height="150" style="border-radius: 15px;">
-</div>
+</div> -->
+
+--- 
 
 - > Skills Applied
   - *tools*, *parameters*, *environment*, *Options* & *post*
+  - *input* , *timeout* & *when*
   - Credentials:
     - `withCredentials`
     - Using `Credentials()` in `environment{}`
@@ -61,6 +74,9 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
     - `waitForQualityGate()` 
   - Docker:
     - `withDockerRegistry()`
+  - Cloud:
+    - `withAWS()`
+    - `s3Upload()`
 
 
 
@@ -69,7 +85,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 </div>
 
 
-## Continuous Deployment
+## Continuous Deployment/Delivery
 - `Deploy` the new feature in dev Env
 - Run `integration testing`
 - After success, Create `Pull Request` for review `PR`
@@ -77,7 +93,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 <img src="./Images/CD.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
 </div>
 
-## Continuous Delivery
+---
 - update configuration (ImageTag)
 - DAST testing
 - After success, Approve `Pull Request`
@@ -95,17 +111,15 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 </div>
 
 
-## Best Practice
-
-System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
-
+## Notes Best Practice
+- To enable css in jenkins:*System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+*
 
 ### Backup & Restore in Jenkins
 ```bash
 tar -czvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins .
 tar -xzvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins
 ```
-
 
 ### Linting Stage
 Linting is the process of analyzing your code for *potential errors*, *style issues*, and *bad practices* without executing it.

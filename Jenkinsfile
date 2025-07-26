@@ -283,7 +283,7 @@ pipeline {
             }
         }
 
-        stage('Lambda -- S3 Upload & Deploy') {
+        stage('Deploy to Production (AWS Lambda)') {
             when {
                 expression {
                     return env.GIT_BRANCH == 'origin/main'
