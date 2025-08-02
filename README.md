@@ -13,8 +13,8 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
    - [Jenkins Intro](#jenkins-intro)
    - [Jenkins Architecture](#jenkins-architecture)
    - [Jenkins Agent](#jenkins-agent)
-   - [Jenkins Automation](#jenkins-automation)
    - [Jenkins Pipeline](#jenkins-pipeline)
+   - [Jenkins CLI API](#jenkins-cli-api)
    - [Jenkins Security](#jenkins-security)
    - [Jenkins Config](#jenkins-config)
    - [Jenkins Backup & Restore](#jenkins-backup--restore)
@@ -127,7 +127,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 > ###  CD Pipeline Stages
 - Test Deployment on VM 
 - K8S Update Image Tag
-- Raise PR (Manifests Repo: new Image Tag)
+- Raise PR using APIs (Manifests Repo: new Image Tag)
 - Approve App Deployment 
 - DAST - OWASP ZAP
 - Admin Prod Approve 
@@ -227,7 +227,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 
 
-## Jenkins Automation
+## Jenkins CLI API
 - Using CLI (SSH/Jar)
      - Install jenkins-cli.jar then use the cli to control jenkins
 - Jenkins REST API 
@@ -284,10 +284,10 @@ tar -xzvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins
 - Build Monitor View Plugin
 - Monitoring using Java Melody
 - Jenkins Scaling -> **Add Worker Nodes**
-
-## Linting Stage
-Notes Best Practice
 - To enable css in jenkins:**System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")**
 
+<!-- #### Linting Stage
+Notes 
+
 Linting is the process of analyzing your code for *potential errors*, *style issues*, and *bad practices* without executing it.
-- In Node.js, we typically use `ESLint` popular JavaScript linter.
+- In Node.js, we typically use `ESLint` popular JavaScript linter. -->
