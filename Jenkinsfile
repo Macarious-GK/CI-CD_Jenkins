@@ -50,7 +50,7 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                     echo "Installing dependencies in App-SourceCode directory..."
-                    // npm install || true
+                    npm install || true
                     echo "Dependencies installed successfully."
                 }
             }
@@ -123,18 +123,18 @@ pipeline {
         stage('SAST - SonarQube') {
             steps {
                 echo "Running SonarQube analysis..."
-                // timeout(time: 60, unit: 'SECONDS') {
-                //     withSonarQubeEnv('sonar-qube-server') {
-                //         sh 'echo $SONAR_SCANNER_HOME'
-                //         sh '''
-                //         $SONAR_SCANNER_HOME/bin/sonar-scanner \
-                //         -Dsonar.projectKey=Solar-System-Project \
-                //         -Dsonar.sources=app.js \
-                //         -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-                //         '''
-                //     }
-                // }
-                // waitForQualityGate abortPipeline: true
+                timeout(time: 60, unit: 'SECONDS') {
+                    withSonarQubeEnv('sonar-qube-server') {
+                        sh 'echo $SONAR_SCANNER_HOME'
+                        sh '''
+                        $SONAR_SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.projectKey=Solar-System-Project \
+                        -Dsonar.sources=app.js \
+                        -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+                        '''
+                    }
+                }
+                waitForQualityGate abortPipeline: true
             }
         }
 
@@ -267,17 +267,17 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                 echo "Running OWASP ZAP API scan..."
-                // sh '''
-                //     chmod 777 $(pwd)
-                //     docker run -v $(pwd):/zap/wrk/:rw ghcr.io/zaproxy/zaproxy zap-api-scan.py \
-                //     -t http://192.168.56.10:30333/api-docs/ \
-                //     -f openapi \
-                //     -r zap_report.html \
-                //     -w zap_report.md \
-                //     -J zap_json_report.json \
-                //     -x zap_xml_report.xml \
-                //     -c zap_ignore_rules.txt \
-                //     '''
+                sh '''
+                    chmod 777 $(pwd)
+                    docker run -v $(pwd):/zap/wrk/:rw ghcr.io/zaproxy/zaproxy zap-api-scan.py \
+                    -t http://192.168.56.10:30333/api-docs/ \
+                    -f openapi \
+                    -r zap_report.html \
+                    -w zap_report.md \
+                    -J zap_json_report.json \
+                    -x zap_xml_report.xml \
+                    -c zap_ignore_rules.txt \
+                    '''
                 echo "OWASP ZAP API scan completed."
                 }
             }
@@ -321,6 +321,7 @@ pipeline {
     }
     post {
         always {
+            slackNotificationMethod("${currentBuild.result}")
             echo "Cleaning up workspace..."
             sh 'rm -rf CI-CD_Manifests_NodeJS'
             dir('App-SourceCode') {
