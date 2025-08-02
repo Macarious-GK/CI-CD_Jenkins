@@ -6,6 +6,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - **Jenkins** (CI/CD automation)
 - **Node.js** (Application)
 - **MongoDB** (Database)
+- **GitOps** ArgoCD
 - **Jenkins Plugins**:
   - Git
   - Blue Ocean
@@ -25,6 +26,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 ## Project Structure
 
+### CI-CD_Jenkins_NodeJS Repo
 ```bash
 .
 ├── App-SourceCode
@@ -34,6 +36,16 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 └── README.md
 ```
 
+### CI-CI-CD_Manifests_NodeJS Repo
+[Manifests_NodeJS Repo Here!](https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git)
+```bash
+.
+├── kubernetes
+│   ├── Application_NodeJS.yaml
+│   └── Database_MongoDB.yaml
+├── .gitignore
+└── README.md
+```
 
 ## Jenkins Intro
 - Jenkins is CI/CD Tool for automated tasks
