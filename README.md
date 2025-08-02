@@ -63,7 +63,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
     - `Folder`: Used to group and organize Jenkins jobs into folders. 
     - `Organization Folder`: Create a set of Multibranch project subfolders by scanning for repo
 <div style="text-align: center;">
-<img src="./Jenkinsarch.png" alt="Jenkins" width="950" height="500" style="border-radius: 15px;">
+<img src="./Images/Jenkinsarch.png" alt="Jenkins" width="650" height="350" style="border-radius: 15px;">
 </div>
 
 ## Jenkins Agent
@@ -127,7 +127,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Develop the feature and build test (Unit/integration)
 - **Scan Dependencies** -> Linting -> **Sast(Quality Gate)** -> Build Image -> **Image Scanning**
 <div style="text-align: center;">
-<img src="./Images/CI.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
+<img src="./Images/CI.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
 </div>
 
 > ###  CI Pipeline Stages
@@ -165,7 +165,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 
 <div style="text-align: center;">
-<img src="./Images//jenkins-sonar.PNG" alt="Jenkins" width="700" height="400" style="border-radius: 15px;">
+<img src="./Images//jenkins-sonar.PNG" alt="Jenkins" width="600" height="350" style="border-radius: 15px;">
 </div>
 
 
@@ -184,14 +184,14 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 - Deploy to production using strategies
 
 <div style="text-align: center;">
-<img src="./Images/CDelivery.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
+<img src="./Images/CDelivery.png" alt="Jenkins" width="650" height="300" style="border-radius: 15px;">
 </div>
 
 ## Post Build
 - Collect reports
 - Notify admin using slack/email
 <div style="text-align: center;">
-<img src="./Images/Postbuild.png" alt="Jenkins" width="750" height="350" style="border-radius: 15px;">
+<img src="./Images/Postbuild.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
 </div>
 
 
@@ -247,8 +247,6 @@ tar -czvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins .
 tar -xzvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins
 ```
 
-Linting is the process of analyzing your code for *potential errors*, *style issues*, and *bad practices* without executing it.
-- In Node.js, we typically use `ESLint` popular JavaScript linter.
 
 ## Jenkins Administration
 - Markup formatters
@@ -259,3 +257,5 @@ Linting is the process of analyzing your code for *potential errors*, *style iss
 - Jenkins Scaling -> **Add Worker Nodes**
 
 ## Linting Stage
+Linting is the process of analyzing your code for *potential errors*, *style issues*, and *bad practices* without executing it.
+- In Node.js, we typically use `ESLint` popular JavaScript linter.
