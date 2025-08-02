@@ -2,6 +2,25 @@
 
 This project demonstrates a complete CI/CD pipeline built with **Jenkins**, using a Node.js application with a MongoDB backend. The pipeline automates building, testing, and Deployment.
 
+## Table of Contents
+- [Stack](#stack)
+- [Project Structure](#project-structure)
+- [CI/CD (Continuous Integration, Continuous Deployment & Continuous Delivery)](#cicd)
+   - [Continuous Integration](#continuous-integration)
+   - [Continuous Deployment/Delivery](#continuous-deploymentdelivery)
+   - [Post Build](#post-build)
+- [Jenkins Study Notes](#jenkins-study-notes)
+   - [Jenkins Intro](#jenkins-intro)
+   - [Jenkins Architecture](#jenkins-architecture)
+   - [Jenkins Agent](#jenkins-agent)
+   - [Jenkins Automation](#jenkins-automation)
+   - [Jenkins Pipeline](#jenkins-pipeline)
+   - [Jenkins Security](#jenkins-security)
+   - [Jenkins Config](#jenkins-config)
+   - [Jenkins Backup & Restore](#jenkins-backup--restore)
+   - [Jenkins Administration](#jenkins-administration)
+
+
 ## Stack
 - **Jenkins** (CI/CD automation)
 - **Node.js** (Application)
@@ -27,6 +46,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 ## Project Structure
 
 ### CI-CD_Jenkins_NodeJS Repo
+- This Repo contain the Application code and the Jenkinsfile for CI/CD automation
 ```bash
 .
 ├── App-SourceCode
@@ -37,7 +57,9 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 ```
 
 ### CI-CI-CD_Manifests_NodeJS Repo
-[Manifests_NodeJS Repo Here!](https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git)
+- This Repo contain the K8s Manifests files for the NodeJs App, Used by ArgoCD for GitOps.
+
+- [Check Manifests_NodeJS Repo Here!](https://github.com/Macarious-GK/CI-CD_Manifests_NodeJS.git)
 ```bash
 .
 ├── kubernetes
@@ -46,6 +68,83 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 ├── .gitignore
 └── README.md
 ```
+
+# Continuous Integration, Continuous Deployment & Continuous Delivery
+- `Continuous Integration` **CI**: frequently integrating code from multiple developers into a shared repository
+- `Continuous Deployment` **CD**: automatically released to production without human intervention.
+- `Continuous Delivery` **CD**: automatically released to production but requires manual approval.
+
+
+## Continuous Integration
+- Using Feature based branch (New Branch for new features)
+- Develop the feature and build test (Unit/integration)
+<div style="text-align: center;">
+<img src="./Images/CI.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
+</div>
+
+> ###  CI Pipeline Stages
+- Checkout Code
+- Install Dependencies
+- Lint Code
+- Dependency Scanning
+- Unit Testing
+- Code Coverage
+- SAST Analysis (َQuality Gate) `SonarQube`
+- Docker Image Build
+- Docker Image Scan
+- Docker Image Push
+
+
+<!-- <div style="text-align: center;">
+<img src="./Images/FULL_CI_Pipeline.png" alt="Jenkins" width="1100" height="150" style="border-radius: 15px;">
+</div> -->
+
+--- 
+
+
+<div style="text-align: center;">
+<img src="./Images//jenkins-sonar.PNG" alt="Jenkins" width="600" height="350" style="border-radius: 15px;">
+</div>
+
+
+## Continuous Deployment/Delivery
+- `Deploy` the new feature in dev Env
+- Run `integration testing`
+- After success, Create `Pull Request` for review `PR`
+<div style="text-align: center;">
+<img src="./Images/CD.png" alt="Jenkins" width="400" height="250" style="border-radius: 15px;">
+</div>
+
+---
+- update configuration (ImageTag)
+- DAST testing
+- After success, Approve `Pull Request`
+- Deploy to production using strategies
+
+<div style="text-align: center;">
+<img src="./Images/CDelivery.png" alt="Jenkins" width="650" height="300" style="border-radius: 15px;">
+</div>
+
+> ###  CD Pipeline Stages
+- Test Deployment on VM 
+- K8S Update Image Tag
+- Raise PR (Manifests Repo: new Image Tag)
+- Approve App Deployment 
+- DAST - OWASP ZAP
+- Admin Prod Approve 
+- Deploy to Production (AWS Lambda)
+- Smoke testing
+- Notify Slack
+
+## Post Build
+- Collect reports
+- Notify admin using slack/email
+<div style="text-align: center;">
+<img src="./Images/Postbuild.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
+</div>
+
+
+# Jenkins Study Notes
 
 ## Jenkins Intro
 - Jenkins is CI/CD Tool for automated tasks
@@ -107,9 +206,6 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 ---
 
 
-
-
-
 ## Jenkins Pipelines
 - Styles: 
     - **Declarative**: modern, cleaner, and more structured way to write Jenkins pipelines.
@@ -128,87 +224,9 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 
 
-# Continuous Integration, Continuous Deployment & Continuous Delivery
-- `Continuous Integration` **CI**: frequently integrating code from multiple developers into a shared repository
-- `Continuous Deployment` **CD**: automatically released to production without human intervention.
-- `Continuous Delivery` **CD**: automatically released to production but requires manual approval.
-
-
-## Continuous Integration
-- Using Feature based branch (New Branch for new features)
-- Develop the feature and build test (Unit/integration)
-- **Scan Dependencies** -> Linting -> **Sast(Quality Gate)** -> Build Image -> **Image Scanning**
-<div style="text-align: center;">
-<img src="./Images/CI.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
-</div>
-
-> ###  CI Pipeline Stages
-- Checkout Code
-- Install Dependencies
-- Lint Code
-- Dependency Scanning
-- Unit Testing
-- Code Coverage
-- SAST Analysis (َQuality Gate) `SonarQube`
-- Docker Image Build
-- Docker Image Scan
-- Docker Image Push
-- Notify Slack
-
-> ###  CD Pipeline Stages
-- Testing Deploy VM
-- K8S Update Image Tag
-- Raise PR (Manifests Repo: new Image Tag)
-- Approve App Deployment 
-- DAST - OWASP ZAP
-- Admin Prod Approve 
-- Deploy to Production (AWS Lambda)
-- Smoke testing
-- Notify Slack
-
-<!-- <div style="text-align: center;">
-<img src="./Images/FULL_CI_Pipeline.png" alt="Jenkins" width="1100" height="150" style="border-radius: 15px;">
-</div> -->
-
---- 
 
 
 
-
-
-<div style="text-align: center;">
-<img src="./Images//jenkins-sonar.PNG" alt="Jenkins" width="600" height="350" style="border-radius: 15px;">
-</div>
-
-
-## Continuous Deployment/Delivery
-- `Deploy` the new feature in dev Env
-- Run `integration testing`
-- After success, Create `Pull Request` for review `PR`
-<div style="text-align: center;">
-<img src="./Images/CD.png" alt="Jenkins" width="400" height="250" style="border-radius: 15px;">
-</div>
-
----
-- update configuration (ImageTag)
-- DAST testing
-- After success, Approve `Pull Request`
-- Deploy to production using strategies
-
-<div style="text-align: center;">
-<img src="./Images/CDelivery.png" alt="Jenkins" width="650" height="300" style="border-radius: 15px;">
-</div>
-
-## Post Build
-- Collect reports
-- Notify admin using slack/email
-<div style="text-align: center;">
-<img src="./Images/Postbuild.png" alt="Jenkins" width="600" height="300" style="border-radius: 15px;">
-</div>
-
-
-# Notes Best Practice
-- To enable css in jenkins:**System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")**
 
 ## Jenkins Automation
 - Using CLI (SSH/Jar)
@@ -253,7 +271,7 @@ curl -u mac:mac http://192.168.56.20:8080/api/json
 - Email Extension / Slack
 
 
-## Backup & Restore in Jenkins
+## Jenkins Backup & Restore
 ```bash
 tar -czvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins .
 tar -xzvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins
@@ -269,5 +287,8 @@ tar -xzvf /backup/jenkins-backup.tar.gz -C /var/lib/jenkins
 - Jenkins Scaling -> **Add Worker Nodes**
 
 ## Linting Stage
+Notes Best Practice
+- To enable css in jenkins:**System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")**
+
 Linting is the process of analyzing your code for *potential errors*, *style issues*, and *bad practices* without executing it.
 - In Node.js, we typically use `ESLint` popular JavaScript linter.
