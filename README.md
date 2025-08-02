@@ -22,24 +22,22 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 
 ## Stack
-- **Jenkins** (CI/CD automation)
 - **Node.js** (Application)
 - **MongoDB** (Database)
-- **GitOps** ArgoCD
-- **Jenkins Plugins**:
-  - Git
+- **Jenkins** (CI/CD automation)
+- **Jenkins features**:
+  - Jenkins Shared Library
   - Blue Ocean
+  - Git - SSH
   - NodeJS Plugin
-  - Slack Notification
-  - Email Extension
-  - Junit / publishHTML
-  - AWS
-  - Docker
-  - SSH 
+  - AWS - K8s - Docker
+  - Junit - publishHTML
+  - Slack Notification - Email Extension
 - **Security**:
   - trivy
   - SonarQube
   - OWASP ZAP 
+- **GitOps** ArgoCD
 
 ---
 
@@ -47,6 +45,7 @@ This project demonstrates a complete CI/CD pipeline built with **Jenkins**, usin
 
 ### CI-CD_Jenkins_NodeJS Repo
 - This Repo contain the Application code and the Jenkinsfile for CI/CD automation
+- The pipelines utilize a shared library from the following repository: [Jenkins Shared Library](https://github.com/Macarious-GK/Jenkins-Shared-Library.git).
 ```bash
 .
 ├── App-SourceCode

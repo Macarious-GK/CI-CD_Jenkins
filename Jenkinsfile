@@ -1,13 +1,6 @@
+@Library('Jenkins-Shared-Library') _
+
 pipeline {
-    // agent { This is feature Branch
-    //     // dockerfile {
-    //     //     filename 'Dockerfile'
-    //     //     dir 'App-SourceCode' // This is where Jenkins will look for the Dockerfile
-    //     // }
-    //     // docker {
-    //     //     image 'macarious25siv/project:nodejsagent'
-    //     // }
-    // }
     agent any
     tools {
         nodejs 'latestnodejs'
@@ -142,7 +135,7 @@ pipeline {
             steps {
                 dir('App-SourceCode') {
                     echo "Building Docker image..."
-                    sh 'docker build -t macarious25siv/project:$GIT_COMMIT .'
+                    buildDockerImage('macarious25siv/project:$GIT_COMMIT')
                     echo "Docker image built successfully."
                 }
             }
